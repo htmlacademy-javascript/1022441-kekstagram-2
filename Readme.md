@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Victoria Knyazeva](https://up.htmlacademy.ru/javascript-individual/2/user/1022441).
-* Наставник: `Неизвестно`.
+* Студент: [Виктория Князева](https://up.htmlacademy.ru/javascript-individual/2/user/1022441).
+* Наставник: [Николай Шабалин](https://htmlacademy.ru/profile/id1057153).
 
 ---
 
