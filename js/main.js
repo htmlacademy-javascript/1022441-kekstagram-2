@@ -74,7 +74,7 @@ function generateMoqData() {
       id: id,
       url: `photos/${ id }.jpg`,
       description: `description-${ id }`,
-      likes: getRandomInteger(15,200),
+      likes: getRandomInteger(15, 200),
       comments: getRandomComments(uniqCommentId)
     };
   }
@@ -83,5 +83,3 @@ function generateMoqData() {
 }
 
 generateMoqData();
-
-
