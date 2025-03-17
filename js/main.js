@@ -6,7 +6,7 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-function getUniqInteger (min, max) {
+function getUniqInteger(min, max) {
   const previousValues = [];
 
   return function () {
@@ -22,28 +22,28 @@ function getUniqInteger (min, max) {
   };
 }
 
+const COMMENTORS = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+];
+
+const COMMENTS = [
+  'Всё отлично!',
+  'В целом всё неплохо.',
+  'Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
+  'В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают.',
+  'Как можно было поймать такой неудачный момент?!'
+];
+
 function getRandomComments(uniqCommentId) {
-  const COMMENTORS = [
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Юлия',
-  ];
-
-  const COMMENTS = [
-    'Всё отлично!',
-    'В целом всё неплохо.',
-    'Но не всё.',
-    'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
-    'В конце концов это просто непрофессионально.',
-    'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-    'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-    'Лица у людей на фотке перекошены, как будто их избивают.',
-    'Как можно было поймать такой неудачный момент?!'
-  ];
-
   function getMessage() {
     const a = getRandomInteger(0, COMMENTS.length - 1);
     const b = getRandomInteger(0, COMMENTS.length - 1);
@@ -72,8 +72,8 @@ function generateMoqData() {
     const id = uniqPictureId();
     return {
       id: id,
-      url: `photos/${ id }.jpg`,
-      description: `description-${ id }`,
+      url: `photos/${id}.jpg`,
+      description: `description-${id}`,
       likes: getRandomInteger(15, 200),
       comments: getRandomComments(uniqCommentId)
     };
