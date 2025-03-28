@@ -1,3 +1,5 @@
 import {generateMoqData} from './data.js';
+import {renderPhotosList} from './render-photos.js';
 
-generateMoqData();
+const data = generateMoqData();
+renderPhotosList(data);
