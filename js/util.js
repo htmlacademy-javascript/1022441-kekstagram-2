@@ -23,4 +23,17 @@ function getUniqInteger (min, max) {
   };
 }
 
-export {getRandomInteger, getUniqInteger};
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const onDocumentKeydown = function(callback) {
+  return function(evt) {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      callback();
+    }
+  };
+};
+
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown};
