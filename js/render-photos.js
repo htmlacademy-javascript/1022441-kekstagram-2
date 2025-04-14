@@ -9,19 +9,26 @@ const renderPhotosList = (pictures) => {
   pictures.forEach((picture) => {
     const pictureElement = pictureTemplate.cloneNode(true);
 
-    pictureElement.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      renderFullsizePhoto(picture);
-    });
-
     pictureElement.querySelector('.picture__img').src = picture.url;
     pictureElement.querySelector('.picture__img').alt = picture.description;
     pictureElement.querySelector('.picture__likes').textContent = picture.likes;
     pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    pictureElement.setAttribute('data-picture-id', picture.id);
     pictureFragment.appendChild(pictureElement);
   });
 
   photosContainer.appendChild(pictureFragment);
+
+  photosContainer.addEventListener('click', (evt) => {
+    const pictureElement = evt.target.closest('[data-picture-id]');
+    if (!pictureElement) {
+      return;
+    }
+    const pictureId = +(pictureElement.getAttribute('data-picture-id'));
+    const clickedPicture = pictures.find((picture) => picture.id === pictureId);
+    evt.preventDefault();
+    renderFullsizePhoto(clickedPicture);
+  });
 };
 
 export {renderPhotosList};
