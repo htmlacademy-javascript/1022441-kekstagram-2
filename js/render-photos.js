@@ -20,13 +20,13 @@ const renderPhotosList = (pictures) => {
   photosContainer.appendChild(pictureFragment);
 
   photosContainer.addEventListener('click', (evt) => {
+    evt.preventDefault();
     const pictureElement = evt.target.closest('[data-picture-id]');
     if (!pictureElement) {
       return;
     }
     const pictureId = +(pictureElement.getAttribute('data-picture-id'));
     const clickedPicture = pictures.find((picture) => picture.id === pictureId);
-    evt.preventDefault();
     renderFullsizePhoto(clickedPicture);
   });
 };
