@@ -36,4 +36,10 @@ const onDocumentKeydown = function(callback) {
   };
 };
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown};
+const preventEscPropagation = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation};
