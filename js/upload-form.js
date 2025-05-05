@@ -9,17 +9,19 @@ const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
 
 const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
+const BUTTON_TEXT = {
+  PUBLISHING: 'Публикую...',
+  PUBLISH: 'Опубликовать'
+};
 
 const docKeyDownHandler = onDocumentKeydown(closeUploadEditorWindow);
 
-imgUploadForm.addEventListener('keydown', (evt) => {
+function handleFormKeydown(evt) {
   const tag = evt.target.tagName.toLowerCase();
   if ((tag === 'input' || tag === 'textarea') && evt.target !== imgUploadStartInput) {
     preventEscPropagation(evt);
   }
-});
-
-imgUploadForm.removeEventListener('keydown', preventEscPropagation);
+}
 
 imgUploadStartInput.addEventListener('change', () => {
   const file = imgUploadStartInput.files[0];
@@ -47,11 +49,13 @@ function openUploadEditorWindow() {
   imgUploadEffect.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', docKeyDownHandler);
+  imgUploadForm.addEventListener('keydown', handleFormKeydown);
 }
 
 function closeUploadEditorWindow() {
-  imgUploadOverlay.classList.add('hidden');
+  imgUploadForm.removeEventListener('keydown', handleFormKeydown);
   document.removeEventListener('keydown', docKeyDownHandler);
+  imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.querySelector('.img-upload__input').value = '';
 }
@@ -61,13 +65,13 @@ imgUploadCancel.addEventListener('click', () => {
 });
 
 function blockSubmitButton() {
+  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISHING;
   imgUploadSubmit.disabled = true;
-  imgUploadSubmit.textContent = 'Публикую...';
 }
 
 function unblockSubmitButton() {
+  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISH;
   imgUploadSubmit.disabled = false;
-  imgUploadSubmit.textContent = 'Опубликовать';
 }
 
 function initUploadEditor() {
