@@ -12,6 +12,15 @@ const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 
 const docKeyDownHandler = onDocumentKeydown(closeUploadEditorWindow);
 
+imgUploadForm.addEventListener('keydown', (evt) => {
+  const tag = evt.target.tagName.toLowerCase();
+  if ((tag === 'input' || tag === 'textarea') && evt.target !== imgUploadStartInput) {
+    preventEscPropagation(evt);
+  }
+});
+
+imgUploadForm.removeEventListener('keydown', preventEscPropagation);
+
 imgUploadStartInput.addEventListener('change', () => {
   const file = imgUploadStartInput.files[0];
   if (file) {
@@ -35,8 +44,6 @@ imgUploadStartInput.addEventListener('change', () => {
 
 function openUploadEditorWindow() {
   imgUploadOverlay.classList.remove('hidden');
-  textHashtags.addEventListener('keydown', preventEscPropagation);
-  textDescription.addEventListener('keydown', preventEscPropagation);
   imgUploadEffect.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', docKeyDownHandler);
@@ -44,8 +51,6 @@ function openUploadEditorWindow() {
 
 function closeUploadEditorWindow() {
   imgUploadOverlay.classList.add('hidden');
-  textHashtags.removeEventListener('keydown', preventEscPropagation);
-  textDescription.removeEventListener('keydown', preventEscPropagation);
   document.removeEventListener('keydown', docKeyDownHandler);
   document.body.classList.remove('modal-open');
   document.querySelector('.img-upload__input').value = '';
