@@ -7,6 +7,7 @@ const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textDescription = document.querySelector('.text__description');
 const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
 
 const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 const BUTTON_TEXT = {
@@ -89,4 +90,4 @@ function initUploadEditor() {
   });
 }
 
-export {initUploadEditor};
+export {initUploadEditor, imgUploadPreview, imgUploadStartInput};
