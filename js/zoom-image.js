@@ -1,14 +1,16 @@
 import {imgUploadStartInput, imgUploadPreview} from './upload-form.js';
 
-const SCALE_STEP = 25;
-const SCALE_MIN = 25;
-const SCALE_MAX = 100;
+const SCALE = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100
+};
 
 const scaleControlValue = document.querySelector('.scale__control--value');
 const scaleControlBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleControlSmallerButton = document.querySelector('.scale__control--smaller');
 
-let scaleValue = SCALE_MAX;
+let scaleValue = SCALE.MAX;
 
 const updateScale = function() {
   scaleControlValue.value = `${scaleValue}%`;
@@ -16,20 +18,20 @@ const updateScale = function() {
 };
 
 const zoomImage = function(scaleStep) {
-  scaleValue = Math.min(Math.max(SCALE_MIN, scaleValue + scaleStep), SCALE_MAX);
+  scaleValue = Math.min(Math.max(SCALE.MIN, scaleValue + scaleStep), SCALE.MAX);
   updateScale();
 };
 
 const onZoomIn = function() {
-  zoomImage(SCALE_STEP);
+  zoomImage(SCALE.STEP);
 };
 
 const onZoomOut = function() {
-  zoomImage(-SCALE_STEP);
+  zoomImage(-SCALE.STEP);
 };
 
 imgUploadStartInput.addEventListener('change', () => {
-  scaleValue = SCALE_MAX;
+  scaleValue = SCALE.MAX;
   updateScale();
 });
 

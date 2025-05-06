@@ -1,13 +1,12 @@
 import {preventEscPropagation, onDocumentKeydown} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
+import { initEffectsControls, imgUploadPreview } from './image-effects.js';
 
 const imgUploadStartInput = document.querySelector('.img-upload__start input[type=file]');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textDescription = document.querySelector('.text__description');
-const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
 
 const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 const BUTTON_TEXT = {
@@ -47,7 +46,6 @@ imgUploadStartInput.addEventListener('change', () => {
 
 function openUploadEditorWindow() {
   imgUploadOverlay.classList.remove('hidden');
-  imgUploadEffect.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', docKeyDownHandler);
   imgUploadForm.addEventListener('keydown', handleFormKeydown);
@@ -76,6 +74,7 @@ function unblockSubmitButton() {
 }
 
 function initUploadEditor() {
+  initEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
     const isFormValid = uploadFormValidator.validate();
     if (!isFormValid) {
