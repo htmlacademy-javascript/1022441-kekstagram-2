@@ -1,6 +1,7 @@
 import {preventEscPropagation, onDocumentKeydown} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
-import { initEffectsControls, imgUploadPreview } from './image-effects.js';
+import {initEffectsControls} from './image-effects.js';
+import {initZoomControls, resetZoom} from './zoom-image.js';
 
 const imgUploadStartInput = document.querySelector('.img-upload__start input[type=file]');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -49,6 +50,7 @@ function openUploadEditorWindow() {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', docKeyDownHandler);
   imgUploadForm.addEventListener('keydown', handleFormKeydown);
+  resetZoom();
 }
 
 function closeUploadEditorWindow() {
@@ -74,6 +76,7 @@ function unblockSubmitButton() {
 }
 
 function initUploadEditor() {
+  initZoomControls();
   initEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
     const isFormValid = uploadFormValidator.validate();
@@ -89,4 +92,4 @@ function initUploadEditor() {
   });
 }
 
-export {initUploadEditor, imgUploadPreview, imgUploadStartInput};
+export {initUploadEditor, imgUploadStartInput};

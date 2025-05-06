@@ -1,4 +1,4 @@
-import {imgUploadStartInput, imgUploadPreview} from './upload-form.js';
+import {imgUploadPreview} from './image-effects.js';
 
 const SCALE = {
   STEP: 25,
@@ -6,9 +6,10 @@ const SCALE = {
   MAX: 100
 };
 
-const scaleControlValue = document.querySelector('.scale__control--value');
-const scaleControlBiggerButton = document.querySelector('.scale__control--bigger');
-const scaleControlSmallerButton = document.querySelector('.scale__control--smaller');
+const scaleControl = document.querySelector('.scale');
+const scaleControlValue = scaleControl.querySelector('.scale__control--value');
+const scaleControlBiggerButton = scaleControl.querySelector('.scale__control--bigger');
+const scaleControlSmallerButton = scaleControl.querySelector('.scale__control--smaller');
 
 let scaleValue = SCALE.MAX;
 
@@ -30,10 +31,14 @@ const onZoomOut = function() {
   zoomImage(-SCALE.STEP);
 };
 
-imgUploadStartInput.addEventListener('change', () => {
+function resetZoom() {
   scaleValue = SCALE.MAX;
   updateScale();
-});
+}
 
-scaleControlSmallerButton.addEventListener('click', onZoomOut);
-scaleControlBiggerButton.addEventListener('click', onZoomIn);
+function initZoomControls() {
+  scaleControlSmallerButton.addEventListener('click', onZoomOut);
+  scaleControlBiggerButton.addEventListener('click', onZoomIn);
+}
+
+export {initZoomControls, resetZoom};

@@ -102,11 +102,7 @@ function changeEffect(effect) {
   }
   currentEffect = effect;
   const effectDescriptor = effectDescriptors[currentEffect];
-  if (effectDescriptor.filter === 'none') {
-    imgUploadEffect.classList.add('hidden');
-  } else {
-    imgUploadEffect.classList.remove('hidden');
-  }
+  imgUploadEffect.classList.toggle('hidden', effectDescriptor.filter === 'none');
   effectDescriptor.level = effectDescriptor.max;
   slider.updateOptions({
     range: {
