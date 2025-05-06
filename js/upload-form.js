@@ -1,11 +1,12 @@
 import {preventEscPropagation, onDocumentKeydown} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
+import {initEffectsControls} from './image-effects.js';
+import {initZoomControls, resetZoom} from './zoom-image.js';
 
 const imgUploadStartInput = document.querySelector('.img-upload__start input[type=file]');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textDescription = document.querySelector('.text__description');
-const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
 
 const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
@@ -46,10 +47,10 @@ imgUploadStartInput.addEventListener('change', () => {
 
 function openUploadEditorWindow() {
   imgUploadOverlay.classList.remove('hidden');
-  imgUploadEffect.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', docKeyDownHandler);
   imgUploadForm.addEventListener('keydown', handleFormKeydown);
+  resetZoom();
 }
 
 function closeUploadEditorWindow() {
@@ -75,6 +76,8 @@ function unblockSubmitButton() {
 }
 
 function initUploadEditor() {
+  initZoomControls();
+  initEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
     const isFormValid = uploadFormValidator.validate();
     if (!isFormValid) {
@@ -89,4 +92,4 @@ function initUploadEditor() {
   });
 }
 
-export {initUploadEditor};
+export {initUploadEditor, imgUploadStartInput};
