@@ -50,12 +50,12 @@ function showSuccess(message) {
 
   document.body.append(successElement);
 
+  const closeSuccessWindowHandler = onDocumentKeydown(closeSuccessWindow);
+
   function closeSuccessWindow() {
     successElement.remove();
     document.removeEventListener('keydown', closeSuccessWindowHandler);
   }
-
-  const closeSuccessWindowHandler = onDocumentKeydown(closeSuccessWindow);
 
   document.addEventListener('keydown', closeSuccessWindowHandler);
 
@@ -68,7 +68,7 @@ function showSuccess(message) {
   successButton.addEventListener('click', () => {
     closeSuccessWindow();
   });
-};
+}
 
 const ERROR_DISPLAY_TIME = 5000;
 
@@ -83,6 +83,6 @@ function showError(message) {
   setTimeout(() => {
     errorElement.remove();
   }, ERROR_DISPLAY_TIME);
-};
+}
 
 export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showError};

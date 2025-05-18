@@ -88,7 +88,7 @@ function initUploadEditor() {
     }
     blockSubmitButton();
     sendData(new FormData(evt.target))
-      .then((data) => {
+      .then(() => {
         closeUploadEditorWindow();
         showSuccess('Изображение успешно загружено');
       })
