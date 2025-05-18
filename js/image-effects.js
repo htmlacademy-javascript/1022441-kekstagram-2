@@ -124,4 +124,10 @@ function initEffectsControls() {
   });
 }
 
-export {initEffectsControls, imgUploadPreview};
+function resetEffect() {
+  const inputEffectNone = document.querySelector('#effect-none');
+  inputEffectNone.checked = true;
+  changeEffect(inputEffectNone.value);
+}
+
+export {initEffectsControls, imgUploadPreview, resetEffect};

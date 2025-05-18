@@ -42,4 +42,47 @@ const preventEscPropagation = (evt) => {
   }
 };
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation};
+function showSuccess(message) {
+  const successTemplate = document.querySelector('#success').content.querySelector('.success');
+  const successElement = successTemplate.cloneNode(true);
+  successElement.querySelector('.success__title').textContent = message;
+  const successButton = successElement.querySelector('.success__button');
+
+  document.body.append(successElement);
+
+  const closeSuccessWindowHandler = onDocumentKeydown(closeSuccessWindow);
+
+  function closeSuccessWindow() {
+    successElement.remove();
+    document.removeEventListener('keydown', closeSuccessWindowHandler);
+  }
+
+  document.addEventListener('keydown', closeSuccessWindowHandler);
+
+  successElement.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.success__inner')) {
+      closeSuccessWindow();
+    }
+  });
+
+  successButton.addEventListener('click', () => {
+    closeSuccessWindow();
+  });
+}
+
+const ERROR_DISPLAY_TIME = 5000;
+
+function showError(message) {
+  const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+
+  const errorElement = errorTemplate.cloneNode(true);
+  errorElement.querySelector('.data-error__title').textContent = message;
+
+  document.body.append(errorElement);
+
+  setTimeout(() => {
+    errorElement.remove();
+  }, ERROR_DISPLAY_TIME);
+}
+
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showError};

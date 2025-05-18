@@ -1,4 +1,4 @@
-import { onDocumentKeydown } from './util';
+import {onDocumentKeydown} from './util';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
