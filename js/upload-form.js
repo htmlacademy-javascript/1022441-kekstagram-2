@@ -1,7 +1,8 @@
-import {preventEscPropagation, onDocumentKeydown} from './util.js';
+import {preventEscPropagation, onDocumentKeydown, showSuccess, showError} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
-import {initEffectsControls} from './image-effects.js';
+import {initEffectsControls, resetEffect} from './image-effects.js';
 import {initZoomControls, resetZoom} from './zoom-image.js';
+import {sendData} from './api.js';
 
 const imgUploadStartInput = document.querySelector('.img-upload__start input[type=file]');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -51,6 +52,7 @@ function openUploadEditorWindow() {
   document.addEventListener('keydown', docKeyDownHandler);
   imgUploadForm.addEventListener('keydown', handleFormKeydown);
   resetZoom();
+  resetEffect();
 }
 
 function closeUploadEditorWindow() {
@@ -79,17 +81,24 @@ function initUploadEditor() {
   initZoomControls();
   initEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isFormValid = uploadFormValidator.validate();
     if (!isFormValid) {
-      evt.preventDefault();
       return;
     }
     blockSubmitButton();
-    setTimeout(() => {
-      unblockSubmitButton();
-      closeUploadEditorWindow();
-    }, 2000);
+    sendData(new FormData(evt.target))
+      .then((data) => {
+        closeUploadEditorWindow();
+        showSuccess('Изображение успешно загружено');
+      })
+      .catch((error) => {
+        showError(error.message);
+      })
+      .finally(() => {
+        unblockSubmitButton();
+      });
   });
 }
 
-export {initUploadEditor, imgUploadStartInput};
+export { initUploadEditor, imgUploadStartInput };
