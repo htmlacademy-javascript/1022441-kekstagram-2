@@ -1,13 +1,13 @@
 import './zoom-image.js';
-import {renderPhotosList} from './render-photos.js';
 import {initUploadEditor} from './upload-form.js';
 import {getData} from './api.js';
 import {showError} from './util.js';
+import {activateView} from './view.js';
 
 initUploadEditor();
 getData()
   .then((data) => {
-    renderPhotosList(data);
+    activateView(data);
   })
   .catch((err) => {
     showError(err.message);
