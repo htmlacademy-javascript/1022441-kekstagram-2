@@ -1,5 +1,5 @@
-import {debounce} from './util';
-import {renderPhotosList, clearPhotosList} from './render-photos';
+import {debounce} from './util.js';
+import {renderPhotosList, clearPhotosList} from './render-photos.js';
 
 const NUMBER_RANDOM_PHOTOS = 10;
 const RERENDER_DELAY = 500;
