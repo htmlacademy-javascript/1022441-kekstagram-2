@@ -9,6 +9,9 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const textDescription = document.querySelector('.text__description');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const effectsPreviews = Array.from(document.querySelectorAll('.effects__preview'));
+
 
 const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 const BUTTON_TEXT = {
@@ -29,7 +32,7 @@ imgUploadStartInput.addEventListener('change', () => {
   const file = imgUploadStartInput.files[0];
   if (file) {
     const fileName = file.name.toLowerCase();
-    const dotPosition = fileName.indexOf('.');
+    const dotPosition = fileName.lastIndexOf('.');
     if (dotPosition < 0) {
       return;
     }
@@ -37,6 +40,13 @@ imgUploadStartInput.addEventListener('change', () => {
     if (!FILE_TYPES.includes(fileExtension)) {
       return;
     }
+
+    imgUploadPreview.src = URL.createObjectURL(file);
+
+    const imageUrl = `url(${imgUploadPreview.src})`;
+    effectsPreviews.forEach((photo) => {
+      photo.style.backgroundImage = imageUrl;
+    });
 
     textDescription.value = '';
     textHashtags.value = '';
