@@ -14,6 +14,13 @@ const modeNames = {
   DISCUSSED: 'filter-discussed'
 };
 
+function compareComments(photoA, photoB) {
+  const commentsCountA = photoA.comments.length;
+  const commentsCountB = photoB.comments.length;
+
+  return commentsCountB - commentsCountA;
+}
+
 const modeFilters = {
   [modeNames.DEFAULT]: function (allPhotos) {
     return allPhotos;
@@ -26,14 +33,6 @@ const modeFilters = {
   },
 
   [modeNames.DISCUSSED]: function (allPhotos) {
-
-    function compareComments(photoA, photoB) {
-      const commentsCountA = photoA.comments.length;
-      const commentsCountB = photoB.comments.length;
-
-      return commentsCountB - commentsCountA;
-    }
-
     return allPhotos.slice()
       .sort(compareComments);
   }
@@ -68,7 +67,8 @@ function activateView(allPhotos) {
   });
 
   function onPhotosChange(evt) {
-    changeViewMode(evt.target.id, allPhotos);
+    const buttonId = evt.target.closest('button').id;
+    changeViewMode(buttonId, allPhotos);
   }
 
   imgFiltersForm.addEventListener('click', debounce(onPhotosChange, RERENDER_DELAY));
