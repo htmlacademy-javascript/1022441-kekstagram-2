@@ -1,5 +1,5 @@
 
-function getRandomInteger (min, max) {
+function getRandomInteger(min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
@@ -7,7 +7,7 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-function getUniqInteger (min, max) {
+function getUniqInteger(min, max) {
   const previousValues = [];
 
   return function () {
@@ -85,4 +85,13 @@ function showError(message) {
   }, ERROR_DISPLAY_TIME);
 }
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showError};
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showError, debounce};

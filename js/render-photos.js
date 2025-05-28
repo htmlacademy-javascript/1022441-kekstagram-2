@@ -31,4 +31,11 @@ const renderPhotosList = (pictures) => {
   });
 };
 
-export {renderPhotosList};
+function clearPhotosList() {
+  const usersPhotoList = document.querySelectorAll('.pictures .picture');
+  usersPhotoList.forEach((picture) => {
+    picture.remove();
+  });
+}
+
+export {renderPhotosList, clearPhotosList};
