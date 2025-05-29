@@ -72,7 +72,7 @@ function showSuccess(message) {
 
 const ERROR_DISPLAY_TIME = 5000;
 
-function showError(message) {
+function showStartError(message) {
   const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 
   const errorElement = errorTemplate.cloneNode(true);
@@ -85,6 +85,35 @@ function showError(message) {
   }, ERROR_DISPLAY_TIME);
 }
 
+function showError(message, onCloseCallback) {
+  const errorTemple = document.querySelector('#error').content.querySelector('.error');
+  const errorElement = errorTemple.cloneNode(true);
+  errorElement.querySelector('.error__title').textContent = message;
+  const errorButton = errorElement.querySelector('.error__button');
+
+  document.body.append(errorElement);
+
+  const closeErrorWindowHandler = onDocumentKeydown(closeErrorWindow);
+
+  document.addEventListener('keydown', closeErrorWindowHandler);
+
+  function closeErrorWindow() {
+    errorElement.remove();
+    document.removeEventListener('keydown', closeErrorWindowHandler);
+    onCloseCallback();
+  }
+
+  errorElement.addEventListener('click', (evt) => {
+    if (!evt.target.closest('.error__inner')) {
+      closeErrorWindow();
+    }
+  });
+
+  errorButton.addEventListener('click', () => {
+    closeErrorWindow();
+  });
+}
+
 function debounce(callback, timeoutDelay = 500) {
   let timeoutId;
 
@@ -94,4 +123,4 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showError, debounce};
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showStartError, showError, isEscapeKey, debounce};

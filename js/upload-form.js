@@ -1,4 +1,4 @@
-import {preventEscPropagation, onDocumentKeydown, showSuccess, showError} from './util.js';
+import {preventEscPropagation, isEscapeKey, showSuccess, showError} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
 import {initEffectsControls, resetEffect} from './image-effects.js';
 import {initZoomControls, resetZoom} from './zoom-image.js';
@@ -19,11 +19,16 @@ const BUTTON_TEXT = {
   PUBLISH: 'Опубликовать'
 };
 
-const docKeyDownHandler = onDocumentKeydown(closeUploadEditorWindow);
+let errorMessageHidden = true;
+
+function docKeyDownHandler(evt) {
+  if (isEscapeKey(evt) && errorMessageHidden) {
+    closeUploadEditorWindow();
+  }
+}
 
 function handleFormKeydown(evt) {
-  const tag = evt.target.tagName.toLowerCase();
-  if ((tag === 'input' || tag === 'textarea') && evt.target !== imgUploadStartInput) {
+  if (evt.target === textHashtags || evt.target === textDescription) {
     preventEscPropagation(evt);
   }
 }
@@ -103,7 +108,10 @@ function initUploadEditor() {
         showSuccess('Изображение успешно загружено');
       })
       .catch((error) => {
-        showError(error.message);
+        errorMessageHidden = false;
+        showError(error.message, () => {
+          errorMessageHidden = true;
+        });
       })
       .finally(() => {
         unblockSubmitButton();

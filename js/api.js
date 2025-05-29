@@ -20,7 +20,13 @@ const fetchData = (route, errorText, method = Method.GET, body = null) =>
       if (!response.ok) {
         throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
       }
-      return response.json();
+      return response.text()
+        .then((text) => {
+          if (!text) {
+            return Promise.resolve(undefined);
+          }
+          return Promise.resolve(JSON.parse(text));
+        });
     })
     .catch((err) => {
       throw new Error(errorText ?? err.message);
