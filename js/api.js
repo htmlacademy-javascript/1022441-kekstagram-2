@@ -14,7 +14,7 @@ const ErrorText = {
   SEND_DATA: 'Ошибка загрузки файла',
 };
 
-const fetchData = (route, errorText, method, body) =>
+const fetchData = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
