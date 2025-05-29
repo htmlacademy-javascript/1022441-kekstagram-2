@@ -1,16 +1,16 @@
 
-function getRandomInteger(min, max) {
+const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
-function getUniqInteger(min, max) {
+const getUniqInteger = (min, max) => {
   const previousValues = [];
 
-  return function () {
+  return () => {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
       return null;
@@ -21,19 +21,17 @@ function getUniqInteger(min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const onDocumentKeydown = function(callback) {
-  return function(evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      callback();
-    }
-  };
+const getDocumentKeydownHandler = (callback) => (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    callback();
+  }
 };
 
 const preventEscPropagation = (evt) => {
@@ -42,7 +40,7 @@ const preventEscPropagation = (evt) => {
   }
 };
 
-function showSuccess(message) {
+const showSuccess = (message) => {
   const successTemplate = document.querySelector('#success').content.querySelector('.success');
   const successElement = successTemplate.cloneNode(true);
   successElement.querySelector('.success__title').textContent = message;
@@ -50,14 +48,14 @@ function showSuccess(message) {
 
   document.body.append(successElement);
 
-  const closeSuccessWindowHandler = onDocumentKeydown(closeSuccessWindow);
+  const documentKeyDownHandler = getDocumentKeydownHandler(closeSuccessWindow);
 
   function closeSuccessWindow() {
     successElement.remove();
-    document.removeEventListener('keydown', closeSuccessWindowHandler);
+    document.removeEventListener('keydown', documentKeyDownHandler);
   }
 
-  document.addEventListener('keydown', closeSuccessWindowHandler);
+  document.addEventListener('keydown', documentKeyDownHandler);
 
   successElement.addEventListener('click', (evt) => {
     if (!evt.target.closest('.success__inner')) {
@@ -68,11 +66,11 @@ function showSuccess(message) {
   successButton.addEventListener('click', () => {
     closeSuccessWindow();
   });
-}
+};
 
 const ERROR_DISPLAY_TIME = 5000;
 
-function showStartError(message) {
+const showStartError = (message) => {
   const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 
   const errorElement = errorTemplate.cloneNode(true);
@@ -83,9 +81,9 @@ function showStartError(message) {
   setTimeout(() => {
     errorElement.remove();
   }, ERROR_DISPLAY_TIME);
-}
+};
 
-function showError(message, onCloseCallback) {
+const showError = (message, onCloseCallback) => {
   const errorTemple = document.querySelector('#error').content.querySelector('.error');
   const errorElement = errorTemple.cloneNode(true);
   errorElement.querySelector('.error__title').textContent = message;
@@ -93,13 +91,13 @@ function showError(message, onCloseCallback) {
 
   document.body.append(errorElement);
 
-  const closeErrorWindowHandler = onDocumentKeydown(closeErrorWindow);
+  const documentKeyDownHandler = getDocumentKeydownHandler(closeErrorWindow);
 
-  document.addEventListener('keydown', closeErrorWindowHandler);
+  document.addEventListener('keydown', documentKeyDownHandler);
 
   function closeErrorWindow() {
     errorElement.remove();
-    document.removeEventListener('keydown', closeErrorWindowHandler);
+    document.removeEventListener('keydown', documentKeyDownHandler);
     onCloseCallback();
   }
 
@@ -112,15 +110,15 @@ function showError(message, onCloseCallback) {
   errorButton.addEventListener('click', () => {
     closeErrorWindow();
   });
-}
+};
 
-function debounce(callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, onDocumentKeydown, preventEscPropagation, showSuccess, showStartError, showError, isEscapeKey, debounce};
+export {getRandomInteger, getUniqInteger, getRandomArrayElement, getDocumentKeydownHandler, preventEscPropagation, showSuccess, showStartError, showError, isEscapeKey, debounce};

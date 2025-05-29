@@ -13,32 +13,32 @@ const scaleControlSmallerButton = scaleControl.querySelector('.scale__control--s
 
 let scaleValue = SCALE.MAX;
 
-const updateScale = function() {
+const updateScale = () => {
   scaleControlValue.value = `${scaleValue}%`;
   imgUploadPreview.style.transform = `scale(${scaleValue / 100})`;
 };
 
-const zoomImage = function(scaleStep) {
+const zoomImage = (scaleStep) => {
   scaleValue = Math.min(Math.max(SCALE.MIN, scaleValue + scaleStep), SCALE.MAX);
   updateScale();
 };
 
-const onZoomIn = function() {
+const zoomInClickHandler = () => {
   zoomImage(SCALE.STEP);
 };
 
-const onZoomOut = function() {
+const zoomOutClickHandler = () => {
   zoomImage(-SCALE.STEP);
 };
 
-function resetZoom() {
+const resetZoom = () => {
   scaleValue = SCALE.MAX;
   updateScale();
-}
+};
 
-function initZoomControls() {
-  scaleControlSmallerButton.addEventListener('click', onZoomOut);
-  scaleControlBiggerButton.addEventListener('click', onZoomIn);
-}
+const initZoomControls = () => {
+  scaleControlSmallerButton.addEventListener('click', zoomOutClickHandler);
+  scaleControlBiggerButton.addEventListener('click', zoomInClickHandler);
+};
 
 export {initZoomControls, resetZoom};

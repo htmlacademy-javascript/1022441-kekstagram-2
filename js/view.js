@@ -14,33 +14,24 @@ const modeNames = {
   DISCUSSED: 'filter-discussed'
 };
 
-function compareComments(photoA, photoB) {
+const compareComments = (photoA, photoB) => {
   const commentsCountA = photoA.comments.length;
   const commentsCountB = photoB.comments.length;
 
   return commentsCountB - commentsCountA;
-}
+};
 
 const modeFilters = {
-  [modeNames.DEFAULT]: function (allPhotos) {
-    return allPhotos;
-  },
+  [modeNames.DEFAULT]: (allPhotos) => allPhotos,
 
-  [modeNames.RANDOM]: function (allPhotos) {
-    return allPhotos.slice()
-      .sort(() => Math.random() - 0.5)
-      .slice(0, NUMBER_RANDOM_PHOTOS);
-  },
+  [modeNames.RANDOM]: (allPhotos) => allPhotos.slice().sort(() => Math.random() - 0.5).slice(0, NUMBER_RANDOM_PHOTOS),
 
-  [modeNames.DISCUSSED]: function (allPhotos) {
-    return allPhotos.slice()
-      .sort(compareComments);
-  }
+  [modeNames.DISCUSSED]: (allPhotos) => allPhotos.slice().sort(compareComments)
 };
 
 let currentMode;
 
-function changeViewMode(mode, allPhotos) {
+const changeViewMode = (mode, allPhotos) => {
   if (!(mode in modeFilters)) {
     mode = modeNames.DEFAULT;
   }
@@ -54,26 +45,34 @@ function changeViewMode(mode, allPhotos) {
   const filteredPhotos = modeFilters[currentMode](allPhotos);
   clearPhotosList();
   renderPhotosList(filteredPhotos);
-}
+};
 
-function activateView(allPhotos) {
-  imgFilters.classList.remove('img-filters--inactive');
+const initFilterButtons = () => {
   imgFiltersButtons.forEach((button) => {
     button.addEventListener('click', (evt) => {
       const activeButton = imgFiltersForm.querySelector('.img-filters__button--active');
-      activeButton.classList.remove('img-filters__button--active');
-      evt.target.classList.add('img-filters__button--active');
+      if (activeButton.id !== evt.target.id) {
+        activeButton.classList.remove('img-filters__button--active');
+        evt.target.classList.add('img-filters__button--active');
+      }
     });
   });
+};
 
-  function onPhotosChange(evt) {
+const initView = () => {
+  imgFilters.classList.remove('img-filters--inactive');
+  initFilterButtons();
+};
+
+const renderView = (allPhotos) => {
+  const onPhotosChange = (evt) => {
     const buttonId = evt.target.closest('button').id;
     changeViewMode(buttonId, allPhotos);
-  }
+  };
 
   imgFiltersForm.addEventListener('click', debounce(onPhotosChange, RERENDER_DELAY));
 
   changeViewMode(modeNames.DEFAULT, allPhotos);
-}
+};
 
-export {activateView};
+export {initView, renderView};

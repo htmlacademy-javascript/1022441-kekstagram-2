@@ -1,5 +1,5 @@
 import {preventEscPropagation, isEscapeKey, showSuccess, showError} from './util.js';
-import {uploadFormValidator, imgUploadForm, textHashtags} from './updload-form-validation.js';
+import {uploadFormValidator, imgUploadForm, textHashtags} from './upload-form-validation.js';
 import {initEffectsControls, resetEffect} from './image-effects.js';
 import {initZoomControls, resetZoom} from './zoom-image.js';
 import {sendData} from './api.js';
@@ -21,16 +21,33 @@ const BUTTON_TEXT = {
 
 let errorMessageHidden = true;
 
-function docKeyDownHandler(evt) {
+const documentKeyDownHandler = (evt) => {
   if (isEscapeKey(evt) && errorMessageHidden) {
     closeUploadEditorWindow();
   }
-}
+};
 
-function handleFormKeydown(evt) {
+const formKeyDownHandler = (evt) => {
   if (evt.target === textHashtags || evt.target === textDescription) {
     preventEscPropagation(evt);
   }
+};
+
+const openUploadEditorWindow = () => {
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', documentKeyDownHandler);
+  imgUploadForm.addEventListener('keydown', formKeyDownHandler);
+  resetZoom();
+  resetEffect();
+};
+
+function closeUploadEditorWindow() {
+  imgUploadForm.removeEventListener('keydown', formKeyDownHandler);
+  document.removeEventListener('keydown', documentKeyDownHandler);
+  imgUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.querySelector('.img-upload__input').value = '';
 }
 
 imgUploadStartInput.addEventListener('change', () => {
@@ -61,38 +78,21 @@ imgUploadStartInput.addEventListener('change', () => {
   }
 });
 
-function openUploadEditorWindow() {
-  imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', docKeyDownHandler);
-  imgUploadForm.addEventListener('keydown', handleFormKeydown);
-  resetZoom();
-  resetEffect();
-}
-
-function closeUploadEditorWindow() {
-  imgUploadForm.removeEventListener('keydown', handleFormKeydown);
-  document.removeEventListener('keydown', docKeyDownHandler);
-  imgUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.querySelector('.img-upload__input').value = '';
-}
-
 imgUploadCancel.addEventListener('click', () => {
   closeUploadEditorWindow();
 });
 
-function blockSubmitButton() {
+const blockSubmitButton = () => {
   imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISHING;
   imgUploadSubmit.disabled = true;
-}
+};
 
-function unblockSubmitButton() {
+const unblockSubmitButton = () => {
   imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISH;
   imgUploadSubmit.disabled = false;
-}
+};
 
-function initUploadEditor() {
+const initUploadEditor = () => {
   initZoomControls();
   initEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
@@ -117,6 +117,6 @@ function initUploadEditor() {
         unblockSubmitButton();
       });
   });
-}
+};
 
 export { initUploadEditor, imgUploadStartInput };

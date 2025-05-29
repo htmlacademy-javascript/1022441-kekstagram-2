@@ -60,6 +60,9 @@ const effectDescriptors = {
   },
 };
 
+const PRECISION_0 = 0;
+const PRECISION_1 = 1;
+
 const slider = noUiSlider.create(effectLevelSlider, {
   range: {
     min: 0,
@@ -69,15 +72,13 @@ const slider = noUiSlider.create(effectLevelSlider, {
   step: 0.1,
   connect: 'lower',
   format: {
-    to: function (value) {
+    to: (value) => {
       if (Number.isInteger(value)) {
-        return value.toFixed(0);
+        return value.toFixed(PRECISION_0);
       }
-      return value.toFixed(1);
+      return value.toFixed(PRECISION_1);
     },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    from: (value) => parseFloat(value),
   },
 });
 
@@ -96,7 +97,7 @@ effectLevelSlider.noUiSlider.on('update', () => {
   }
 });
 
-function changeEffect(effect) {
+const changeEffect = (effect) => {
   if (currentEffect === effect) {
     return;
   }
@@ -112,9 +113,9 @@ function changeEffect(effect) {
     start: effectDescriptor.level,
     step: effectDescriptor.step
   });
-}
+};
 
-function initEffectsControls() {
+const initEffectsControls = () => {
   changeEffect(document.querySelector('.effects__list input[type="radio"]').value);
 
   effectsGroup.addEventListener('input', (evt) => {
@@ -122,12 +123,12 @@ function initEffectsControls() {
       changeEffect(evt.target.value);
     }
   });
-}
+};
 
-function resetEffect() {
+const resetEffect = () => {
   const inputEffectNone = document.querySelector('#effect-none');
   inputEffectNone.checked = true;
   changeEffect(inputEffectNone.value);
-}
+};
 
 export {initEffectsControls, imgUploadPreview, resetEffect};
