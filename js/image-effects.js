@@ -60,8 +60,8 @@ const effectDescriptors = {
   },
 };
 
-const PRECISION_0 = 0;
-const PRECISION_1 = 1;
+const INTEGER_PRECISION = 0;
+const DECIMAL_PRECISION = 1;
 
 const slider = noUiSlider.create(effectLevelSlider, {
   range: {
@@ -74,9 +74,9 @@ const slider = noUiSlider.create(effectLevelSlider, {
   format: {
     to: (value) => {
       if (Number.isInteger(value)) {
-        return value.toFixed(PRECISION_0);
+        return value.toFixed(INTEGER_PRECISION);
       }
-      return value.toFixed(PRECISION_1);
+      return value.toFixed(DECIMAL_PRECISION);
     },
     from: (value) => parseFloat(value),
   },
