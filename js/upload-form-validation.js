@@ -3,21 +3,16 @@ import '../vendor/pristine/pristine.min.js';
 const HASHTAG_REX_EXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAGS_MAX_COUNT = 5;
 
-const isHashtagValid = function(hashtag) {
-  return hashtag.trim() === '' || HASHTAG_REX_EXP.test(hashtag);
-};
+const isHashtagValid = (hashtag) => hashtag.trim() === '' || HASHTAG_REX_EXP.test(hashtag);
 
-const validateHashtags = function(hashtagsString) {
-  return hashtagsString.trim().split(' ').every(isHashtagValid);
-};
+const validateHashtags = (hashtagsString) => hashtagsString.trim().split(' ').every(isHashtagValid);
 
-
-const validateHashtagsDuplicates = function(hashtagsString) {
+const validateHashtagsDuplicates = (hashtagsString) => {
   const hashtags = hashtagsString.trim().toLowerCase().split(/\s+/);
   return hashtags.length === new Set(hashtags).size;
 };
 
-const validateHashtagsCount = function(hashtagsString) {
+const validateHashtagsCount = (hashtagsString) => {
   const hashtags = hashtagsString.trim().split(/\s+/);
   return hashtags.length <= HASHTAGS_MAX_COUNT;
 };

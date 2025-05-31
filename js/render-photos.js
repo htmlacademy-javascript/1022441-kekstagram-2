@@ -3,6 +3,8 @@ import {renderFullsizePhoto} from './render-fullsize-photo.js';
 const photosContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+let lastClickHandler;
+
 const renderPhotosList = (pictures) => {
   const pictureFragment = document.createDocumentFragment();
 
@@ -19,7 +21,11 @@ const renderPhotosList = (pictures) => {
 
   photosContainer.appendChild(pictureFragment);
 
-  photosContainer.addEventListener('click', (evt) => {
+  if (lastClickHandler) {
+    photosContainer.removeEventListener('click', lastClickHandler);
+  }
+
+  lastClickHandler = (evt) => {
     const pictureElement = evt.target.closest('[data-picture-id]');
     if (!pictureElement) {
       return;
@@ -28,14 +34,16 @@ const renderPhotosList = (pictures) => {
     const pictureId = +(pictureElement.getAttribute('data-picture-id'));
     const clickedPicture = pictures.find((picture) => picture.id === pictureId);
     renderFullsizePhoto(clickedPicture);
-  });
+  };
+
+  photosContainer.addEventListener('click', lastClickHandler);
 };
 
-function clearPhotosList() {
+const clearPhotosList = () => {
   const usersPhotoList = document.querySelectorAll('.pictures .picture');
   usersPhotoList.forEach((picture) => {
     picture.remove();
   });
-}
+};
 
 export {renderPhotosList, clearPhotosList};

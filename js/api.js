@@ -14,13 +14,19 @@ const ErrorText = {
   SEND_DATA: 'Ошибка загрузки файла',
 };
 
-const fetchData = (route, errorText, method, body) =>
+const fetchData = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
       }
-      return response.json();
+      return response.text()
+        .then((text) => {
+          if (!text) {
+            return Promise.resolve(undefined);
+          }
+          return Promise.resolve(JSON.parse(text));
+        });
     })
     .catch((err) => {
       throw new Error(errorText ?? err.message);
