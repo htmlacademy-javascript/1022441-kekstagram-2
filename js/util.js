@@ -1,4 +1,6 @@
 
+const ERROR_DISPLAY_TIME = 5000;
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -67,8 +69,6 @@ const showSuccess = (message) => {
     closeSuccessWindow();
   });
 };
-
-const ERROR_DISPLAY_TIME = 5000;
 
 const showStartError = (message) => {
   const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');

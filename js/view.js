@@ -4,15 +4,15 @@ import {renderPhotosList, clearPhotosList} from './render-photos.js';
 const NUMBER_RANDOM_PHOTOS = 10;
 const RERENDER_DELAY = 500;
 
-const imgFilters = document.querySelector('.img-filters');
-const imgFiltersForm = imgFilters.querySelector('.img-filters__form');
-const imgFiltersButtons = Array.from(imgFiltersForm.querySelectorAll('.img-filters__button'));
-
 const modeNames = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed'
 };
+
+const imgFilters = document.querySelector('.img-filters');
+const imgFiltersForm = imgFilters.querySelector('.img-filters__form');
+const imgFiltersButtons = Array.from(imgFiltersForm.querySelectorAll('.img-filters__button'));
 
 const compareComments = (photoA, photoB) => {
   const commentsCountA = photoA.comments.length;

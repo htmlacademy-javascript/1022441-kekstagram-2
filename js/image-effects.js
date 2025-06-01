@@ -1,6 +1,9 @@
 import '../vendor/nouislider/nouislider.js';
 import '../vendor/nouislider/nouislider.css';
 
+const INTEGER_PRECISION = 0;
+const DECIMAL_PRECISION = 1;
+
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const effectsGroup = document.querySelector('.effects__list');
 const imgUploadEffect = document.querySelector('.img-upload__effect-level');
@@ -59,9 +62,6 @@ const effectDescriptors = {
     level: 3
   },
 };
-
-const INTEGER_PRECISION = 0;
-const DECIMAL_PRECISION = 1;
 
 const slider = noUiSlider.create(effectLevelSlider, {
   range: {
