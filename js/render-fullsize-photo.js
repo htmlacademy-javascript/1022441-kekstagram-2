@@ -1,5 +1,7 @@
 import {getDocumentKeydownHandler} from './util.js';
 
+const COMMENTS_PAGE_SIZE = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -11,7 +13,6 @@ const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 
 const documentKeyDownHandler = getDocumentKeydownHandler(closeBigPicture);
-const COMMENTS_PAGE_SIZE = 5;
 let currentPicture;
 
 const closeButtonClickHandler = () => {

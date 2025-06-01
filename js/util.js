@@ -1,29 +1,5 @@
 
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-const getUniqInteger = (min, max) => {
-  const previousValues = [];
-
-  return () => {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const ERROR_DISPLAY_TIME = 5000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -67,8 +43,6 @@ const showSuccess = (message) => {
     closeSuccessWindow();
   });
 };
-
-const ERROR_DISPLAY_TIME = 5000;
 
 const showStartError = (message) => {
   const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
@@ -121,4 +95,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomInteger, getUniqInteger, getRandomArrayElement, getDocumentKeydownHandler, preventEscPropagation, showSuccess, showStartError, showError, isEscapeKey, debounce};
+export {getDocumentKeydownHandler, preventEscPropagation, showSuccess, showStartError, showError, isEscapeKey, debounce};

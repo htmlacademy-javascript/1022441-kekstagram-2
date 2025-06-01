@@ -4,6 +4,12 @@ import {initEffectsControls, resetEffect} from './image-effects.js';
 import {initZoomControls, resetZoom} from './zoom-image.js';
 import {sendData} from './api.js';
 
+const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
+const BUTTON_TEXT = {
+  PUBLISHING: 'Публикую...',
+  PUBLISH: 'Опубликовать'
+};
+
 const imgUploadStartInput = document.querySelector('.img-upload__start input[type=file]');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
@@ -11,13 +17,6 @@ const textDescription = document.querySelector('.text__description');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const effectsPreviews = Array.from(document.querySelectorAll('.effects__preview'));
-
-
-const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
-const BUTTON_TEXT = {
-  PUBLISHING: 'Публикую...',
-  PUBLISH: 'Опубликовать'
-};
 
 let errorMessageHidden = true;
 
@@ -82,14 +81,9 @@ imgUploadCancel.addEventListener('click', () => {
   closeUploadEditorWindow();
 });
 
-const blockSubmitButton = () => {
-  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISHING;
-  imgUploadSubmit.disabled = true;
-};
-
-const unblockSubmitButton = () => {
-  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISH;
-  imgUploadSubmit.disabled = false;
+const updateSubmitButton = (disabled) => {
+  imgUploadSubmit.innerText = disabled ? BUTTON_TEXT.PUBLISHING : BUTTON_TEXT.PUBLISH;
+  imgUploadSubmit.disabled = disabled;
 };
 
 const initUploadEditor = () => {
@@ -101,7 +95,7 @@ const initUploadEditor = () => {
     if (!isFormValid) {
       return;
     }
-    blockSubmitButton();
+    updateSubmitButton(true);
     sendData(new FormData(evt.target))
       .then(() => {
         closeUploadEditorWindow();
@@ -114,9 +108,9 @@ const initUploadEditor = () => {
         });
       })
       .finally(() => {
-        unblockSubmitButton();
+        updateSubmitButton(false);
       });
   });
 };
 
-export { initUploadEditor, imgUploadStartInput };
+export {initUploadEditor, imgUploadStartInput};
