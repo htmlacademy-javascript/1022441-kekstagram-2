@@ -5,7 +5,6 @@ const INTEGER_PRECISION = 0;
 const DECIMAL_PRECISION = 1;
 
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effectsGroup = document.querySelector('.effects__list');
 const imgUploadEffect = document.querySelector('.img-upload__effect-level');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
@@ -117,12 +116,8 @@ const changeEffect = (effect) => {
 
 const initEffectsControls = () => {
   changeEffect(document.querySelector('.effects__list input[type="radio"]').value);
-
-  effectsGroup.addEventListener('input', (evt) => {
-    if (evt.target.type === 'radio') {
-      changeEffect(evt.target.value);
-    }
-  });
+  const radios = Array.from(document.querySelectorAll('.effects__list input[type="radio"]'));
+  radios.forEach((radio) => radio.addEventListener('change', (evt) => changeEffect(evt.target.value)));
 };
 
 const resetEffect = () => {
