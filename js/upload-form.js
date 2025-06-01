@@ -81,14 +81,9 @@ imgUploadCancel.addEventListener('click', () => {
   closeUploadEditorWindow();
 });
 
-const blockSubmitButton = () => {
-  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISHING;
-  imgUploadSubmit.disabled = true;
-};
-
-const unblockSubmitButton = () => {
-  imgUploadSubmit.innerText = BUTTON_TEXT.PUBLISH;
-  imgUploadSubmit.disabled = false;
+const updateSubmitButton = (disabled) => {
+  imgUploadSubmit.innerText = disabled ? BUTTON_TEXT.PUBLISHING : BUTTON_TEXT.PUBLISH;
+  imgUploadSubmit.disabled = disabled;
 };
 
 const initUploadEditor = () => {
@@ -100,7 +95,7 @@ const initUploadEditor = () => {
     if (!isFormValid) {
       return;
     }
-    blockSubmitButton();
+    updateSubmitButton(true);
     sendData(new FormData(evt.target))
       .then(() => {
         closeUploadEditorWindow();
@@ -113,9 +108,9 @@ const initUploadEditor = () => {
         });
       })
       .finally(() => {
-        unblockSubmitButton();
+        updateSubmitButton(false);
       });
   });
 };
 
-export { initUploadEditor, imgUploadStartInput };
+export {initUploadEditor, imgUploadStartInput};
