@@ -1,10 +1,10 @@
 import {preventEscPropagation, isEscapeKey, showSuccess, showError} from './util.js';
 import {uploadFormValidator, imgUploadForm, textHashtags} from './upload-form-validation.js';
-import {initEffectsControls, resetEffect} from './image-effects.js';
-import {initZoomControls, resetZoom} from './zoom-image.js';
+import {initializeEffectsControls, resetEffect} from './image-effects.js';
+import {initializeZoomControls, resetZoom} from './zoom-image.js';
 import {sendData} from './api.js';
 
-const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
+const EXTENSIONS = ['.jpg', '.jpeg', '.png'];
 const BUTTON_TEXT = {
   PUBLISHING: 'Публикую...',
   PUBLISH: 'Опубликовать'
@@ -58,7 +58,7 @@ imgUploadStartInput.addEventListener('change', () => {
       return;
     }
     const fileExtension = fileName.substring(dotPosition);
-    if (!FILE_TYPES.includes(fileExtension)) {
+    if (!EXTENSIONS.includes(fileExtension)) {
       return;
     }
 
@@ -86,9 +86,9 @@ const updateSubmitButton = (disabled) => {
   imgUploadSubmit.disabled = disabled;
 };
 
-const initUploadEditor = () => {
-  initZoomControls();
-  initEffectsControls();
+const initializeUploadEditor = () => {
+  initializeZoomControls();
+  initializeEffectsControls();
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isFormValid = uploadFormValidator.validate();
@@ -113,4 +113,4 @@ const initUploadEditor = () => {
   });
 };
 
-export {initUploadEditor, imgUploadStartInput};
+export {initializeUploadEditor, imgUploadStartInput};
