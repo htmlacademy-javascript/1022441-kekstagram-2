@@ -47,7 +47,7 @@ const changeViewMode = (mode, allPhotos) => {
   renderPhotosList(filteredPhotos);
 };
 
-const initFilterButtons = () => {
+const initializeFilterButtons = () => {
   imgFiltersButtons.forEach((button) => {
     button.addEventListener('click', (evt) => {
       const activeButton = imgFiltersForm.querySelector('.img-filters__button--active');
@@ -59,20 +59,20 @@ const initFilterButtons = () => {
   });
 };
 
-const initView = () => {
+const initializeView = () => {
   imgFilters.classList.remove('img-filters--inactive');
-  initFilterButtons();
+  initializeFilterButtons();
 };
 
 const renderView = (allPhotos) => {
-  const onPhotosChange = (evt) => {
+  const photosChangeHandler = (evt) => {
     const buttonId = evt.target.closest('button').id;
     changeViewMode(buttonId, allPhotos);
   };
 
-  imgFiltersForm.addEventListener('click', debounce(onPhotosChange, RERENDER_DELAY));
+  imgFiltersForm.addEventListener('click', debounce(photosChangeHandler, RERENDER_DELAY));
 
   changeViewMode(modeNames.DEFAULT, allPhotos);
 };
 
-export {initView, renderView};
+export {initializeView, renderView};

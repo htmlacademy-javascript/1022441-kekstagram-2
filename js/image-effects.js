@@ -114,7 +114,7 @@ const changeEffect = (effect) => {
   });
 };
 
-const initEffectsControls = () => {
+const initializeEffectsControls = () => {
   changeEffect(document.querySelector('.effects__list input[type="radio"]').value);
   const radios = Array.from(document.querySelectorAll('.effects__list input[type="radio"]'));
   radios.forEach((radio) => radio.addEventListener('change', (evt) => changeEffect(evt.target.value)));
@@ -126,4 +126,4 @@ const resetEffect = () => {
   changeEffect(inputEffectNone.value);
 };
 
-export {initEffectsControls, imgUploadPreview, resetEffect};
+export {initializeEffectsControls, imgUploadPreview, resetEffect};

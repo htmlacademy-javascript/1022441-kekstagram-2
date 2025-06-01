@@ -36,9 +36,9 @@ const resetZoom = () => {
   updateScale();
 };
 
-const initZoomControls = () => {
+const initializeZoomControls = () => {
   scaleControlSmallerButton.addEventListener('click', zoomOutClickHandler);
   scaleControlBiggerButton.addEventListener('click', zoomInClickHandler);
 };
 
-export {initZoomControls, resetZoom};
+export {initializeZoomControls, resetZoom};

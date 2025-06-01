@@ -1,12 +1,12 @@
-import {initUploadEditor} from './upload-form.js';
+import {initializeUploadEditor} from './upload-form.js';
 import {getData} from './api.js';
 import {showStartError} from './util.js';
-import {initView, renderView} from './view.js';
+import {initializeView, renderView} from './view.js';
 
-initUploadEditor();
+initializeUploadEditor();
 getData()
   .then((data) => {
-    initView();
+    initializeView();
     renderView(data);
   })
   .catch((err) => {
